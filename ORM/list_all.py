@@ -7,7 +7,6 @@ def list_participante():
         participantes = session.query(Participante).all() 
         if not participantes:  # Verifica si la lista está vacía
             print("🔍 No hay participantes registrados en la base de datos.")
-            return
         else:
             for participante in participantes:
                 print(f"""ID: {participante.id}
