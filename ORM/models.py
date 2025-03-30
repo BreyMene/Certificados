@@ -1,22 +1,33 @@
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey, text
 from sqlalchemy.orm import declarative_base, sessionmaker
 from datetime import datetime
+from dotenv import load_dotenv
+import os
+
+# Cargar variables de entorno desde el archivo .env
+load_dotenv()
+
+# Obtener credenciales desde el entorno
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_HOST = os.getenv("DB_HOST")
+DB_NAME = os.getenv("DB_NAME")
 
 # Declarative base para definir las clases del ORM
 Base = declarative_base()
 
-# Configuración de la conexión sin base de datos para crearla si no existe
-DATABASE_URL_NO_DB = "mysql+mysqlconnector://root:root@localhost/"
+# Configuración de la conexión sin base de datos
+DATABASE_URL_NO_DB = f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/"
 engine_no_db = create_engine(DATABASE_URL_NO_DB)
 
-# Crear la base de datos 'certificadoitm' si no existe
+# Crear la base de datos si no existe
 def create_database():
     with engine_no_db.connect() as conn:
-        conn.execute(text("CREATE DATABASE IF NOT EXISTS certificadoitm"))
-        print("✅Base de datos 'certificadoitm' creada o ya existía.")
+        conn.execute(text(f"CREATE DATABASE IF NOT EXISTS {DB_NAME}"))
+        print(f"✅ Base de datos '{DB_NAME}' creada o ya existía.")
 
-# Ahora conectamos a la base de datos creada
-DATABASE_URL_WITH_DB = "mysql+mysqlconnector://root:root@localhost/certificadoitm"
+# Conectar a la base de datos
+DATABASE_URL_WITH_DB = f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
 engine_with_db = create_engine(DATABASE_URL_WITH_DB)
 
 # Sesión para interactuar con la base de datos
