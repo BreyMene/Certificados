@@ -1,1 +1,7 @@
+# Ignorar archivos de configuración sensibles
 .env
+
+# Ignorar archivos de caché y dependencias innecesarias
+__pycache__/
+*.pyc
+*.pyo
