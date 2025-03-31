@@ -17,7 +17,7 @@ DB_NAME = os.getenv("DB_NAME")
 Base = declarative_base()
 
 # Configuración de la conexión sin base de datos
-DATABASE_URL_NO_DB = f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/"
+DATABASE_URL_NO_DB = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/"
 engine_no_db = create_engine(DATABASE_URL_NO_DB)
 
 # Crear la base de datos si no existe
@@ -27,7 +27,7 @@ def create_database():
         print(f"✅ Base de datos '{DB_NAME}' creada o ya existía.")
 
 # Conectar a la base de datos
-DATABASE_URL_WITH_DB = f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
+DATABASE_URL_WITH_DB = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
 engine_with_db = create_engine(DATABASE_URL_WITH_DB)
 
 # Sesión para interactuar con la base de datos
